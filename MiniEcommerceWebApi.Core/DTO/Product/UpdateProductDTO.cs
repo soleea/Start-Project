@@ -10,6 +10,6 @@ namespace MiniEcommerceWebApi.Core.DTO.Product
 {
     public class UpdateProductDTO : IDTONoID
     {
-        public string c { get; set; }
+        public string ProductName { get; set; }
     }
 }

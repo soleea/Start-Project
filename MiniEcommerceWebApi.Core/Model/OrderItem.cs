@@ -9,17 +9,20 @@ namespace MiniEcommerceWebApi.Core.Model
 {
     public class OrderItem : Entity
     {
-      
+
         public int OrderId { get; set; }
-        public Order Order { get; set; }
-      
+
+        public string Order { get; set; } = null!;
+
         public int ProductId { get; set; }
-        public Product Product { get; set; }
+
         public int Quantity { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
+
         public decimal UnitPrice { get; set; }
-       
-        [NotMapped]
-        public decimal Total => Quantity * UnitPrice;
+        public decimal Total { get; set; }
+
+        public virtual Order OrderNavigation { get; set; } = null!;
+
+        public virtual Product Product { get; set; } = null!;
     }
 }

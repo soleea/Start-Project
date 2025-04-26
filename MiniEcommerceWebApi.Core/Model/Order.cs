@@ -9,18 +9,20 @@ namespace MiniEcommerceWebApi.Core.Model
 {
     public class Order : Entity
     {
-      
+
         public int CustomerId { get; set; }
-        public Customer Customer { get; set; }
-        public string OrderNumber { get; set; }
+
+        public string OrderNumber { get; set; } = null!;
+
         public DateTime OrderDate { get; set; }
 
-        public ICollection<OrderItem> OrderItems { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
 
-        public string OrderStatus { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string OrderStatus { get; set; } = null!;
+
+        public virtual Customer Customer { get; set; } = null!;
+
+        public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
        
 }

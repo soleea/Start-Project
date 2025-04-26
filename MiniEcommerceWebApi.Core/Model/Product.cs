@@ -9,10 +9,13 @@ namespace MiniEcommerceWebApi.Core.Model
 {
     public class Product : Entity
     {
-        public string ProductName { get; set; }
-        public string? Description { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
+        public string ProductName { get; set; } = null!;
+
+        public string Description { get; set; } = null!;
+
         public decimal UnitPrice { get; set; }
-        public List<OrderItem> Items { get; set; }
+
+
+        public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
     }
 }

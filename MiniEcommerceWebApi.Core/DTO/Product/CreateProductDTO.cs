@@ -10,5 +10,10 @@ namespace MiniEcommerceWebApi.Core.DTO.Product
 {
     public class CreateProductDTO: IDTONoID
     {
+        public string ProductName { get; set; } = null!;
+
+        public string Description { get; set; } = null!;
+
+        public decimal UnitPrice { get; set; }
     }
 }

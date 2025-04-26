@@ -5,7 +5,10 @@ using Microsoft.AspNetCore.Mvc;
 using MiniEcommerceWebApi.BusinessService.Interface;
 using MiniEcommerceWebApi.BusinessService.Interface.Utilities;
 using MiniEcommerceWebApi.Core.DTO.Product;
+using MiniEcommerceWebApi.Core.Interface;
 using MiniEcommerceWebApi.Core.Model;
+
+using Newtonsoft.Json;
 
 namespace MiniEcommerceWebApi.Controllers
 {
@@ -22,7 +25,37 @@ namespace MiniEcommerceWebApi.Controllers
         {
         }
 
-     
+        [HttpPost]
+        public async Task<IActionResult> AddAsync([FromBody] CreateProductDTO item)
+        {
+            try
+            {
+                if (item != null)
+                {
+                    var requestBody = $"create  Request Body:  {JsonConvert.SerializeObject(item)}";
+                    HealthLogger.LogInformation(requestBody);
+                }
+
+                if (item == null || !ModelState.IsValid)
+                {
+                    return BadRequest("Invalid CreateUserRecord State");
+                }
+
+                var result = MapDTOToEntityWithNoID<CreateProductDTO, Product>(item);
+                SetAuditInformation(result);
+
+                await BusinessServiceManager.AddAsync(result);
+
+                return Ok(result.Id);
+
+            }
+            catch (Exception ex)
+            {
+                HealthLogger.LogError(ex, $"error at {nameof(AddAsync)} of {nameof(ProductController)}");
+                return StatusCode(500);
+            }
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateAsync([FromBody] UpdateProductDTO item, int id)
         {
@@ -89,14 +122,18 @@ namespace MiniEcommerceWebApi.Controllers
         private void SetNonUpdatableDbEntityPropertiesFromCopy(Product entity, Product dbCopy)
         {
             entity.Id = dbCopy.Id;
-            entity.ProductName = dbCopy.ProductName;
+           
+            entity.Description = dbCopy.Description;
+            entity.UnitPrice = dbCopy.UnitPrice;
         }
         private Product SetAllDbValuesIntoACopy(Product entity)
         {
             var copy = new Product();
 
             copy.Id = entity.Id;
-           copy.ProductName=entity.ProductName;
+            copy.ProductName=entity.ProductName;
+            copy.Description = entity.Description;
+            copy.UnitPrice = entity.UnitPrice;
             return copy;
         }
     }
