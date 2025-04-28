@@ -89,7 +89,9 @@ namespace MiniEcommerceWebApi.BusinessService
             myOrder.CreatedBy=Guid.NewGuid();
             myOrder.CreatedDate = DateTime.UtcNow;
           
-            return await RepositoryManager.AddAsync(myOrder);
+            var results= await RepositoryManager.AddAsync(myOrder);
+
+            return results;
 
         }
     }

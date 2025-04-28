@@ -37,9 +37,9 @@ namespace MiniEcommerceWebApi.Controllers
 
                 SetAuditInformation(result);
 
-                await BusinessServiceManager.AddAsync(result);
+                var finalResult=await BusinessServiceManager.AddAsync(result);
 
-                return Ok(result.Id);
+                return Ok(finalResult);
 
             }
             catch (Exception ex)
