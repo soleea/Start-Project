@@ -33,7 +33,8 @@ namespace MiniEcommerceWebApi.Controllers
                     return BadRequest("Invalid CreateOrder State");
                 }
 
-                var result = MapDTOToEntityWithNoID<CreateOrderDTO, Order>(item);
+                var result = MapDTOToEntityWithNoID<CreateOrderDTO, Order>(item); 
+
                 SetAuditInformation(result);
 
                 await BusinessServiceManager.AddAsync(result);

@@ -43,21 +43,23 @@ namespace MiniEcommerceWebApi.BusinessService
             CheckIfNull(order);
             CheckIfAddedEntityHasId(order.Id);
 
+            var myOrderItems = order.OrderItems;
+
             var orderNumber = $"ORD-{DateTime.UtcNow.Ticks}";
-            
+
             var myOrder = new Order
             {
-                CustomerId = order.CustomerId,
+                CustomerId = 3,
                 OrderNumber = orderNumber,
                 OrderDate = DateTime.UtcNow,
-                OrderStatus = "Pending", 
+                OrderStatus = "Pending",
                 CreatedDate = DateTime.UtcNow,
                 OrderItems = new List<OrderItem>()
             };
 
             decimal totalAmount = 0;
            
-            foreach (var item in order.OrderItems)
+            foreach (var item in myOrderItems)
             {
                 
                 if (item.Quantity <= 0)
@@ -67,23 +69,27 @@ namespace MiniEcommerceWebApi.BusinessService
 
                 if (product == null)
                     continue;
-
-               
+                               
                 var orderItem = new OrderItem
                 {
                     ProductId = product.Id,
                     Quantity = item.Quantity,
-                    UnitPrice = product.UnitPrice
+                    UnitPrice = product.UnitPrice,
+                    Total = item.Quantity* product.UnitPrice,
+                    CreatedBy=Guid.NewGuid(),
+                    CreatedDate= DateTime.UtcNow,
                 };
                
                 totalAmount += orderItem.Total;
-               
-                order.OrderItems.Add(orderItem);
+
+                myOrder.OrderItems.Add(orderItem);
             }
 
-            order.TotalAmount = totalAmount;
+            myOrder.TotalAmount = totalAmount;
+            myOrder.CreatedBy=Guid.NewGuid();
+            myOrder.CreatedDate = DateTime.UtcNow;
           
-            return await RepositoryManager.AddAsync(order);
+            return await RepositoryManager.AddAsync(myOrder);
 
         }
     }

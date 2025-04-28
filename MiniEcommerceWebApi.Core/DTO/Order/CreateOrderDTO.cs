@@ -1,4 +1,5 @@
-﻿using MiniEcommerceWebApi.Core.Interface;
+﻿using MiniEcommerceWebApi.Core.DTO.OrderItem;
+using MiniEcommerceWebApi.Core.Interface;
 
 using System;
 using System.Collections.Generic;
@@ -13,18 +14,8 @@ namespace MiniEcommerceWebApi.Core.DTO.Order
     public class CreateOrderDTO : IDTONoID
     {
         [Required]
-        public List<CreateOrderItem> OrderItems { get; set; }
-
+        public List<CreateOrderItemDTO> OrderItems { get; set; } = null!;
+        
     }
-
-    public class CreateOrderItem : IDTONoID
-    {
-
-        [Required]
-        public int ProductId { get; set; }
-        [Required]
-        public int Quantity { get; set; }
-    }
-
 
 }

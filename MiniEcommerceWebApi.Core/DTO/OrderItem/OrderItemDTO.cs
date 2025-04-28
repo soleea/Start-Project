@@ -11,17 +11,16 @@ namespace MiniEcommerceWebApi.Core.DTO.OrderItem
 {
     public class OrderItemDTO : DTO
     {
-        public int Id { get; set; }
-
+       
         public int OrderId { get; set; }
-        public OrderDTO Order { get; set; }
-
+      
         public int ProductId { get; set; }
         public int Quantity { get; set; }
-        [Column(TypeName = "decimal(18,2)")]
+        
         public decimal UnitPrice { get; set; }
 
         [NotMapped]
-        public decimal Total => Quantity * UnitPrice;
+        public decimal Total { get; set; }
+        //=> Quantity * UnitPrice;
     }
 }

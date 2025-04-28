@@ -13,15 +13,15 @@ public partial class EcommerceDbContext : DbContext
     {
     }
 
-    public virtual DbSet<Customer> Customers { get; set; }
+    public virtual DbSet<Customer> Customers { get; set; } = null!;
 
-    public virtual DbSet<Order> Orders { get; set; }
+    public virtual DbSet<Order> Orders { get; set; } = null!;
 
-    public virtual DbSet<OrderItem> OrderItems { get; set; }
+    public virtual DbSet<OrderItem> OrderItems { get; set; } = null!;
 
-    public virtual DbSet<Product> Products { get; set; }
+    public virtual DbSet<Product> Products { get; set; } = null!;
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         if (!optionsBuilder.IsConfigured)
         {
@@ -82,13 +82,11 @@ public partial class EcommerceDbContext : DbContext
             entity.ToTable("OrderItem");
 
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Order)
-                .HasMaxLength(50)
-                .IsUnicode(false);
+            
             entity.Property(e => e.UnitPrice).HasColumnType("decimal(18, 2)");
             entity.Property(e => e.UpdatedDate).HasColumnType("datetime");
 
-            entity.HasOne(d => d.OrderNavigation).WithMany(p => p.OrderItems)
+            entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OrderItem_Order");

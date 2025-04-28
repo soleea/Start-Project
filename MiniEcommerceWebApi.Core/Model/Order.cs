@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -18,11 +19,12 @@ namespace MiniEcommerceWebApi.Core.Model
 
         public decimal TotalAmount { get; set; }
 
-        public string OrderStatus { get; set; } = null!;
+        public string OrderStatus { get; set; }
 
-        public virtual Customer Customer { get; set; } = null!;
+        public virtual Customer Customer { get; set; }
 
-        public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+       
+        public virtual ICollection<OrderItem> OrderItems { get; set; }
     }
        
 }

@@ -2,6 +2,7 @@
 
 using MiniEcommerceWebApi.Core.DTO.Customer;
 using MiniEcommerceWebApi.Core.DTO.Order;
+using MiniEcommerceWebApi.Core.DTO.OrderItem;
 using MiniEcommerceWebApi.Core.DTO.Product;
 using MiniEcommerceWebApi.Core.Model;
 
@@ -27,6 +28,12 @@ namespace MiniEcommerceWebApi.MappingProfile
             CreateMap<CreateProductDTO, Product>(MemberList.None).ReverseMap();
             CreateMap<ProductDTO, Product>(MemberList.None).ReverseMap();
             CreateMap<UpdateProductDTO, ProductDTO>(MemberList.None).ReverseMap();
+            #endregion
+
+            #region OrderItem
+            CreateMap<OrderItemDTO, OrderItem>(MemberList.None).ReverseMap();
+            CreateMap<CreateOrderItemDTO, OrderItem>(MemberList.None).ReverseMap();
+           
             #endregion
         }
     }
